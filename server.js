@@ -25,6 +25,15 @@ app.use(apiRouter);
 // Logging Middleware
 app.use(morgan('dev'));
 
+// error handler
+app.use((err, req, res, next) => {
+  if (!err.status) {
+    err.status = 500;
+  }
+  console.log(err.message);
+  res.status(err.status).send(err.message);
+});
+
 // This conditional is here for testing purposes:
 if (!module.parent) { 
   // Add your code to start the server listening at PORT below:
